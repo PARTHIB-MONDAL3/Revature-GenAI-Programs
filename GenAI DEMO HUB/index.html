@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🤖 Gen AI Demo Hub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .tab { @apply bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600; }
+  .tool { display: none; }
+  .output { margin-top: 1rem; padding: 1rem; background: white; border-radius: .5rem; }
+  .btn { @apply bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 mt-2; }
+</style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-4 text-center">🤖 Gen AI Demo Hub</h1>
+
+    <!-- Token and Demo Switch -->
+    <div class="mb-4 flex items-center justify-center space-x-2">
+      <input id="token" type="password" placeholder="hf_... (Optional)" class="border p-2 w-1/2 rounded">
+      <label class="text-sm flex items-center space-x-1"><input type="checkbox" id="forceDemo"> <span>Force Demo Mode</span></label>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex justify-center space-x-4 mb-6">
+      <button onclick="showTab('story')" class="tab">📖 Story</button>
+      <button onclick="showTab('poem')" class="tab">🎭 Poem</button>
+      <button onclick="showTab('chat')" class="tab">💬 Chatbot</button>
+      <button onclick="showTab('t2i')" class="tab">🎨 Text→Image</button>
+      <button onclick="showTab('i2c')" class="tab">🖼️ Image→Caption</button>
+    </div>
+
+    <!-- Story -->
+    <div id="story" class="tool">
+      <textarea id="storyPrompt" class="border p-2 w-full" rows="3" placeholder="Write a story about a brave knight..."></textarea>
+      <button onclick="generateStory()" class="btn">Generate Story</button>
+      <div id="storyOutput" class="output"></div>
+    </div>
+
+    <!-- Poem -->
+    <div id="poem" class="tool">
+      <textarea id="poemPrompt" class="border p-2 w-full" rows="3" placeholder="Write a poem about sunrise..."></textarea>
+      <button onclick="generatePoem()" class="btn">Generate Poem</button>
+      <div id="poemOutput" class="output"></div>
+    </div>
+
+    <!-- Chatbot -->
+    <div id="chat" class="tool">
+      <textarea id="chatInput" class="border p-2 w-full" rows="2" placeholder="Say hello to the AI..."></textarea>
+      <button onclick="generateChat()" class="btn">Send</button>
+      <div id="chatOutput" class="output"></div>
+    </div>
+
+    <!-- Text to Image -->
+    <div id="t2i" class="tool">
+      <textarea id="t2iPrompt" class="border p-2 w-full" rows="2" placeholder="Describe an image (e.g. a cat playing guitar)..."></textarea>
+      <button onclick="generateImage()" class="btn">Generate Image</button>
+      <div id="t2iOutput" class="output flex justify-center"></div>
+    </div>
+
+    <!-- Image to Caption -->
+    <div id="i2c" class="tool">
+      <input type="file" id="imageInput" accept="image/*" class="border p-2 w-full mb-2">
+      <button onclick="generateCaption()" class="btn">Generate Caption</button>
+      <div id="i2cOutput" class="output"></div>
+    </div>
+  </div>
+
+<script>
+function showTab(id){
+  document.querySelectorAll('.tool').forEach(t=>t.style.display='none');
+  document.getElementById(id).style.display='block';
+}
+
+async function hfRequest(model, payload, token){
+  const res = await fetch(`https://api-inference.huggingface.co/models/${model}`,{
+    method:"POST",
+    headers:{ "Authorization":`Bearer ${token}`, "Content-Type":"application/json" },
+    body: JSON.stringify(payload)
+  });
+  return res.json();
+}
+
+async function generateStory(){
+  const prompt=document.getElementById("storyPrompt").value;
+  const token=document.getElementById("token").value;
+  const demo=document.getElementById("forceDemo").checked;
+  const out=document.getElementById("storyOutput");
+  out.textContent="Generating...";
+  if(demo||!token){out.textContent="Once upon a time, a brave knight faced a dragon to save his realm.";return;}
+  const data=await hfRequest("microsoft/DialoGPT-medium",{inputs:prompt},token);
+  out.textContent=data?.generated_text||data?.[0]?.generated_text||"No response.";
+}
+
+async function generatePoem(){
+  const prompt=document.getElementById("poemPrompt").value;
+  const token=document.getElementById("token").value;
+  const demo=document.getElementById("forceDemo").checked;
+  const out=document.getElementById("poemOutput");
+  out.textContent="Generating...";
+  if(demo||!token){out.textContent="The sun awakes in golden hue, painting skies in morning dew.";return;}
+  const data=await hfRequest("EleutherAI/gpt-neo-125M",{inputs:prompt},token);
+  out.textContent=data?.generated_text||data?.[0]?.generated_text||"No response.";
+}
+
+async function generateChat(){
+  const msg=document.getElementById("chatInput").value;
+  const token=document.getElementById("token").value;
+  const demo=document.getElementById("forceDemo").checked;
+  const out=document.getElementById("chatOutput");
+  out.textContent="Thinking...";
+  if(demo||!token){out.textContent="Hello! I'm your friendly AI assistant ready to chat.";return;}
+  const data=await hfRequest("microsoft/DialoGPT-medium",{inputs:msg},token);
+  out.textContent=data?.generated_text||data?.[0]?.generated_text||"No response.";
+}
+
+async function generateImage(){
+  const prompt=document.getElementById("t2iPrompt").value;
+  const token=document.getElementById("token").value;
+  const demo=document.getElementById("forceDemo").checked;
+  const out=document.getElementById("t2iOutput");
+  out.textContent="Generating...";
+  if(demo||!token){out.innerHTML="<p>Offline demo mode. (Image generation skipped)</p>";return;}
+  const res=await fetch("https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2",{
+    method:"POST",
+    headers:{ "Authorization":`Bearer ${token}`, "Content-Type":"application/json" },
+    body:JSON.stringify({inputs:prompt})
+  });
+  const blob=await res.blob();
+  const url=URL.createObjectURL(blob);
+  out.innerHTML=`<img src="${url}" alt="Generated Image" class="rounded-lg shadow-lg max-w-sm">`;
+}
+
+async function generateCaption(){
+  const file=document.getElementById("imageInput").files[0];
+  const token=document.getElementById("token").value;
+  const demo=document.getElementById("forceDemo").checked;
+  const out=document.getElementById("i2cOutput");
+  if(!file){out.textContent="Upload an image first.";return;}
+  out.textContent="Analyzing...";
+  if(demo||!token){out.textContent="A playful dog running across the field.";return;}
+  const res=await fetch("https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning",{
+    method:"POST",
+    headers:{ "Authorization":`Bearer ${token}` },
+    body:file
+  });
+  const data=await res.json();
+  out.textContent=data?.[0]?.generated_text||"No caption generated.";
+}
+
+// Default tab
+showTab('story');
+</script>
+</body>
+</html>
+
