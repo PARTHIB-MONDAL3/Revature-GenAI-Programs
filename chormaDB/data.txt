@@ -1,0 +1,5 @@
+A:Apple
+B:Ball
+A:Aeroplane
+A:Ant
+B:Basket
