@@ -1,0 +1,17 @@
+git init
+copy con filename -create file
+code filename - edit file
+git add . -add files
+git commit -m "description"- commit changes
+git push - push to main
+git checkout branch name -switch to next branch
+git branch -create new branch
+git status -tells the status
+git stash - saved copy
+git stash pop -recover the copy
+git gui -for editing to merge
+  
+
+
+question- n-1 ,n-0 why not byte 
+how do I make vriable considered as an interger
