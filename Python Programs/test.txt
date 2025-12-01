@@ -1,0 +1,25 @@
+def characterReplacement(S1, S2):
+    result = -404  # default value
+
+    # Check if both strings have the same length
+    if len(S1) != len(S2):
+        return -1  # Not possible if lengths differ
+
+    # Find the shift between the first characters
+    k = (ord(S2[0]) - ord(S1[0])) % 26
+
+    # Check if the same shift applies to all characters
+    for i in range(len(S1)):
+        if (ord(S2[i]) - ord(S1[i])) % 26 != k:
+            return -1  # Mismatch found, not possible
+
+    result = k
+    return result
+
+
+# Input
+S1 = input("Enter first string: ")
+S2 = input("Enter second string: ")
+
+# Output
+print(characterReplacement(S1, S2))
