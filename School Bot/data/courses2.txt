@@ -1,0 +1,18 @@
+
+batches information with branch name
+---
+Batch Full stack: 45 students
+Mock Test for Full Stack:8
+---
+---
+Batch Data Science Bootcamp: 38 students
+Mock Test for Data Science Bootcamp:5
+---
+---
+Batch Digital Marketing: 52 students
+
+Mock Test for Digital Marketing:6
+---
+---
+Batch D: 41 students
+---

@@ -1,0 +1,85 @@
+--- Course: Data Science Bootcamp ---
+Course Type: Full‑time / Online
+Duration: 12 weeks (Mon‑Fri, 6 hrs/day)
+Fees: ₹1,20,000 (Early‑bird discount 10 % if paid before 15 Oct)
+Days: Monday – Friday
+
+Syllabus:
+  • Introduction to Python & Statistics
+  • Data Wrangling with Pandas
+  • Exploratory Data## 📄 Suggested Layout for the **`courses.txt`** File  
+The chatbot splits the file on **double‑line breaks (`\n\n`)** to create “chunks”.  
+Each chunk should contain a **self‑contained piece of information** (e.g., a single field or a short group of related fields).  
+That makes the retrieval step more accurate because the LLM receives only the most relevant snippet.
+Below is a **ready‑to‑copy template** you can paste into a plain‑text file (UTF‑8, `.txt`).  
+Feel free to add, delete, or reorder courses – just keep the blank line between chunks.
+```text
+--- Course: Data Science Bootcamp ---
+Course Type: Full‑time / Online
+Duration: 12 weeks (Mon‑Fri, 6 hrs/day)
+Fees: ₹1,20,000 (Early‑bird discount 10 % if paid before 15 Oct)
+Days: Monday – Friday
+
+Syllabus:
+  • Introduction to Python & Statistics
+  • Data Wrangling with Pandas
+  • Exploratory Data Analysis
+  • Machine Learning fundamentals (Regression, Classification)
+  • Deep Learning basics (TensorFlow/Keras)
+  • Project: End‑to‑end predictive model
+Test Pattern:
+  • 2 written exams (mid‑term & final) – 40 % each
+  • 1 capstone project – 20 %
+  • MCQ + coding questions
+--- End of Course ---
+--- Course: Full‑Stack Web Development ---
+Course Type: Part‑time / Hybrid
+Duration: 6 months (Weekends, 4 hrs/session)
+Fees: ₹90,000 (Installments available)
+Days: Saturdays & Sundays
+
+Syllabus:
+  • HTML5, CSS3, JavaScript (ES6+)
+  • Responsive Design & Flexbox/Grid
+  • Front‑end frameworks – React.js
+  • Back‑end fundamentals – Node.js & Express
+  • Databases – MongoDB & PostgreSQL
+  • Deployment – Docker, CI/CD basics
+Test Pattern:
+  • Weekly quizzes (10 %)
+  • Mid‑term project – 30 %
+  • Final full‑stack application – 60 %
+--- End of Course ---
+--- Course: Digital Marketing Certification ---
+Course Type: Self‑paced / Online
+Duration: 8 weeks (estimated 8 hrs/week)
+Fees: ₹45,000
+Days: Flexible (any day)
+Syllabus:
+  • Market Research & Consumer Behaviour
+  • SEO fundamentals & tools
+  • SEM & Google Ads
+  • Social Media Advertising (FB, IG, LinkedIn)
+  • Content Strategy & Copywriting
+  • Analytics & Reporting (Google Analytics 4)
+Test Pattern:
+  • 5 module‑wise MCQ tests (20 % each)
+  • Final case‑study presentation – 20 %
+--- End of Course ---
+--- Course: Python for Beginners ---
+Course Type: Short‑term / Online
+Duration: 4 weeks (Mon‑Wed, 3 hrs/day)
+Fees: ₹30,000
+Days: Monday, Tuesday, Wednesday
+Syllabus:
+  • Python syntax & data types
+  • Control flow (if, loops)
+  • Functions & modules
+  • File I/O & exception handling
+  • Intro to OOP (classes, objects)
+Test Pattern:
+  • Weekly coding assignments – 25 % each
+  • Final practical exam – 25 %
+
+
+--- End of Course ---
